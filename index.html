@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Hub BD – Natok, Movies &amp; More</title>
+<meta name="description" content="Hub BD: latest natok, movies and web series updates.">
+<meta name="theme-color" content="#070d1f">
+<style>
+:root{--bg:#070d1f;--panel:#0f1a38;--line:#1f2f5c;--text:#eaf0ff;--muted:#8ea0cf;--blue:#229ed9}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font:16px/1.5 system-ui,-apple-system,'Segoe UI',Arial,sans-serif;-webkit-tap-highlight-color:transparent;padding-bottom:env(safe-area-inset-bottom,0)}
+button,a,input,select{touch-action:manipulation;font:inherit}
+.wrap{max-width:520px;margin:0 auto;padding:0 16px}
+header{position:sticky;top:0;z-index:20;background:rgba(7,13,31,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;min-height:58px}
+.logo{font-weight:800;font-size:26px;letter-spacing:.5px;text-decoration:none;color:inherit;display:flex;align-items:center;gap:9px}
+.logo i{width:22px;height:22px;border-radius:50%;background:conic-gradient(#ff2d55,#ffd60a,#30d158,#0a84ff,#bf5af2,#ff2d55);box-shadow:0 0 12px rgba(10,132,255,.6)}
+.tg{display:flex;align-items:center;gap:8px;background:var(--blue);color:#fff;text-decoration:none;font-weight:700;font-size:14px;padding:8px 14px;border-radius:999px}
+.tg svg{width:18px;height:18px;fill:#fff}
+.tabs{display:flex;gap:8px;overflow-x:auto;padding:14px 0 6px;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:none;background:var(--panel);border:1px solid var(--line);color:var(--muted);padding:7px 16px;border-radius:999px;font-weight:600;cursor:pointer}
+.tab.on{background:#fff;color:#070d1f;border-color:#fff}
+.feed{display:grid;gap:26px;padding:16px 0 10px}
+.post h3{font-size:19px;line-height:1.25;margin:10px 2px 0}
+.thumb{position:relative;aspect-ratio:4/5;border-radius:16px;overflow:hidden;border:1px solid var(--line);background:linear-gradient(135deg,#143a7a,#0c3b2a);cursor:pointer}
+.thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.thumb::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 65%,rgba(0,0,0,.5))}
+.badge{position:absolute;top:12px;left:12px;z-index:2;background:rgba(0,0,0,.65);font-size:12px;font-weight:700;padding:3px 10px;border-radius:6px;letter-spacing:.4px}
+.play{position:absolute;left:50%;top:50%;z-index:3;transform:translate(-50%,-50%);width:84px;aspect-ratio:1;border:0;border-radius:50%;background:transparent;cursor:pointer;display:grid;place-items:center}
+.play::before,.play::after{content:"";position:absolute;inset:-6px;border-radius:50%;background:conic-gradient(#ff2d55,#ffd60a,#30d158,#0a84ff,#bf5af2,#ff2d55);animation:spin 3.2s linear infinite}
+.play::after{filter:blur(16px);opacity:.85}
+.play span{position:relative;z-index:1;width:100%;height:100%;border-radius:50%;background:#0a1226;display:grid;place-items:center}
+.play span::before{content:"";margin-left:8%;border-style:solid;border-width:15px 0 15px 25px;border-color:transparent transparent transparent #fff}
+.thumb:active .play span{transform:scale(.92)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.empty{text-align:center;color:var(--muted);padding:50px 0}
+footer{margin-top:30px;border-top:1px solid var(--line);padding:20px 0 30px;color:var(--muted);font-size:13px;text-align:center}
+.modal{position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.82);display:none;place-items:center;padding:20px}
+.modal.on{display:grid}
+.box{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:26px 22px;width:100%;max-width:380px;text-align:center}
+.box h4{font-size:20px;margin-bottom:6px}.box p{color:var(--muted);font-size:14px;margin-bottom:16px}
+.bar{height:6px;background:#1a2750;border-radius:6px;overflow:hidden;margin:14px 0}
+.bar b{display:block;height:100%;width:0;background:linear-gradient(90deg,#ff2d55,#ffd60a,#30d158,#0a84ff)}
+.bar.go b{width:100%;transition:width 2s linear}
+.btn{display:inline-block;background:var(--blue);color:#fff;border:0;text-decoration:none;font-weight:700;padding:12px 24px;border-radius:10px;cursor:pointer}
+.btn.alt{background:#1f2f5c}.btn.red{background:#d63a3a}
+.x{display:block;margin:14px auto 0;background:none;border:0;color:var(--muted);cursor:pointer}
+.admin{padding:24px 0}.admin h2{font-size:26px;margin-bottom:14px}
+.f{display:grid;gap:10px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:20px}
+.f input,.f select{width:100%;background:#0a1226;color:var(--text);border:1px solid var(--line);border-radius:8px;padding:11px}
+.row{display:flex;gap:10px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:8px;margin-bottom:8px}
+.row img{width:44px;height:55px;object-fit:cover;border-radius:6px;background:#143a7a}
+.row div{flex:1;min-width:0;font-size:14px}.row div small{color:var(--muted);display:block}
+.row .btn{padding:7px 12px;font-size:13px}
+.msg{color:#ffd60a;font-size:14px;margin-bottom:10px}
+[hidden]{display:none!important}
+@media (prefers-reduced-motion:reduce){.play::before,.play::after{animation:none}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <a class="logo" href="#"><i></i>Hub BD</a>
+  <a class="tg" id="tgTop" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M9.8 15.6l-.4 4.2c.6 0 .9-.3 1.2-.6l2.9-2.7 6 4.4c1.1.6 1.9.3 2.2-1L23.9 4.5c.4-1.6-.6-2.2-1.6-1.8L1.3 10.8c-1.5.6-1.5 1.4-.3 1.8l5.4 1.7L19 6.4c.6-.4 1.2-.2.7.2z"/></svg>Telegram</a>
+</div></header>
+
+<main class="wrap">
+  <div id="siteView">
+    <div class="tabs" id="tabs"></div>
+    <div class="feed" id="feed"></div>
+  </div>
+
+  <div id="adminView" class="admin" hidden>
+    <h2>Admin Panel</h2>
+    <div id="msg" class="msg"></div>
+    <form class="f" id="loginForm">
+      <input id="gOwner" placeholder="GitHub username" autocomplete="off" required>
+      <input id="gRepo" placeholder="Repository name" autocomplete="off" required>
+      <input id="gToken" type="password" placeholder="GitHub access token" autocomplete="current-password" required>
+      <button class="btn" type="submit">Login</button>
+    </form>
+    <div id="panel" hidden>
+      <form class="f" id="postForm">
+        <input id="pTitle" placeholder="Post title" required>
+        <input id="pThumb" type="url" placeholder="Thumbnail image link (direct URL)" required>
+        <select id="pCat"></select>
+        <input id="pLink" type="url" placeholder="Telegram channel link for this post" required>
+        <button class="btn" type="submit" id="saveBtn">Add Post</button>
+        <button class="btn alt" type="button" id="cancelEdit" hidden>Cancel Edit</button>
+      </form>
+      <div id="adminList"></div>
+      <button class="btn alt" id="logout" style="margin-top:12px">Logout</button>
+    </div>
+  </div>
+</main>
+
+<footer><div class="wrap">© <span id="yr"></span> Hub BD. All rights reserved.</div></footer>
+
+<div class="modal" id="modal"><div class="box">
+  <h4 id="mTitle"></h4><p id="mText"></p>
+  <div class="bar" id="mBar"><b></b></div>
+  <button class="btn" id="mBtn" hidden></button>
+  <button class="x" id="mClose">Close</button>
+</div></div>
+
+<script>
+var TG_CHANNEL = "https://t.me/+0uICdpdhsvcyZDRl";
+var CATS = ["Natok","Movie","Web Series","Trending"];
+
+var $ = function(s){return document.querySelector(s)};
+$("#yr").textContent = new Date().getFullYear();
+$("#tgTop").href = TG_CHANNEL;
+$("#pCat").innerHTML = CATS.map(function(c){return '<option>'+c+'</option>'}).join("");
+
+var LS = {
+  get:function(k){try{return localStorage.getItem(k)||""}catch(e){return ""}},
+  set:function(k,v){try{localStorage.setItem(k,v)}catch(e){}},
+  del:function(k){try{localStorage.removeItem(k)}catch(e){}}
+};
+var posts = [], cat = "All", editId = null, sha = null, adminOn = false;
+function say(t){ $("#msg").textContent = t || ""; }
+function el(tag, cls, txt){ var e = document.createElement(tag); if(cls) e.className = cls; if(txt != null) e.textContent = txt; return e; }
+
+/* ---------- public site: reads posts.json ---------- */
+function loadPublic(){
+  fetch("posts.json?v=" + Date.now()).then(function(r){return r.ok ? r.json() : []})
+  .then(function(d){ posts = Array.isArray(d) ? d : []; render(); })
+  .catch(function(){ posts = []; render(); });
+}
+function render(){
+  var tabs = $("#tabs"); tabs.innerHTML = "";
+  ["All"].concat(CATS).forEach(function(c){
+    var b = el("button","tab"+(c===cat?" on":""),c);
+    b.onclick = function(){ cat = c; render(); };
+    tabs.appendChild(b);
+  });
+  var feed = $("#feed"); feed.innerHTML = "";
+  var list = posts.filter(function(p){ return cat==="All" || p.category===cat; });
+  if(!list.length){ feed.appendChild(el("div","empty","No posts yet.")); return; }
+  list.forEach(function(p){
+    var a = el("article","post"), t = el("div","thumb");
+    var img = el("img"); img.src = p.thumb; img.alt = p.title; img.loading = "lazy"; img.onerror = function(){ img.remove(); };
+    var pb = el("button","play"); pb.type = "button"; pb.setAttribute("aria-label","Play"); pb.appendChild(el("span"));
+    t.append(img, el("span","badge",p.category), pb);
+    t.onclick = function(){ openFlow(p); };
+    a.append(t, el("h3","",p.title));
+    feed.appendChild(a);
+  });
+}
+
+/* ---------- click flow ---------- */
+var T, cur;
+function wait(title, text, label, next){
+  $("#mTitle").textContent = title; $("#mText").textContent = text;
+  var bar = $("#mBar"), btn = $("#mBtn");
+  btn.hidden = true; bar.hidden = false; bar.classList.remove("go"); void bar.offsetWidth; bar.classList.add("go");
+  clearTimeout(T);
+  T = setTimeout(function(){ bar.hidden = true; btn.hidden = false; btn.textContent = label; btn.onclick = next; }, 2000);
+}
+function openFlow(p){
+  cur = p; $("#modal").classList.add("on");
+  wait("Loading…","Please wait 2 seconds","Continue",function(){
+    wait("Almost ready…","Please wait 2 seconds","Open Video Link",function(){
+      window.open(cur.link,"_blank","noopener"); closeFlow();
+    });
+  });
+}
+function closeFlow(){ clearTimeout(T); $("#modal").classList.remove("on"); }
+$("#mClose").onclick = closeFlow;
+
+/* ---------- admin: saves posts.json to GitHub ---------- */
+function cfg(){ return {o:LS.get("hb_o"), r:LS.get("hb_r"), t:LS.get("hb_t")}; }
+function gh(method, body){
+  var c = cfg();
+  return fetch("https://api.github.com/repos/"+c.o+"/"+c.r+"/contents/posts.json", {
+    method:method,
+    headers:{Authorization:"Bearer "+c.t, Accept:"application/vnd.github+json"},
+    body: body ? JSON.stringify(body) : undefined
+  });
+}
+function dec(b64){ var bin = atob(b64.replace(/\n/g,"")), u = new Uint8Array(bin.length); for(var i=0;i<bin.length;i++) u[i]=bin.charCodeAt(i); return new TextDecoder().decode(u); }
+function enc(str){ var u = new TextEncoder().encode(str), s = ""; u.forEach(function(b){ s += String.fromCharCode(b); }); return btoa(s); }
+
+function adminLoad(){
+  return gh("GET").then(function(r){
+    if(r.status === 404){ posts = []; sha = null; return true; }
+    if(r.status === 401 || r.status === 403){ throw new Error("Token not valid for this repository."); }
+    if(!r.ok) throw new Error("GitHub error " + r.status);
+    return r.json().then(function(j){ sha = j.sha; posts = JSON.parse(dec(j.content)); return true; });
+  });
+}
+function adminSave(msg){
+  var body = {message:msg, content:enc(JSON.stringify(posts,null,1))};
+  if(sha) body.sha = sha;
+  say("Saving…");
+  return gh("PUT", body).then(function(r){
+    if(!r.ok) throw new Error("Save failed (" + r.status + "). Reload and try again.");
+    return r.json();
+  }).then(function(j){ sha = j.content.sha; say("Saved. The live site updates in about 1 minute."); renderAdmin(); })
+  .catch(function(e){ say(e.message); });
+}
+function renderAdmin(){
+  var box = $("#adminList"); box.innerHTML = "";
+  posts.forEach(function(p){
+    var r = el("div","row"), i = el("img"); i.src = p.thumb; i.alt = "";
+    var d = el("div"); d.append(el("span","",p.title), el("small","",p.category));
+    var e = el("button","btn alt","Edit"); e.onclick = function(){ startEdit(p); };
+    var x = el("button","btn red","Delete"); x.onclick = function(){
+      if(confirm("Delete this post?")){ posts = posts.filter(function(q){return q.id!==p.id}); adminSave("Delete post"); }
+    };
+    r.append(i,d,e,x); box.appendChild(r);
+  });
+}
+function startEdit(p){
+  editId = p.id; $("#pTitle").value = p.title; $("#pThumb").value = p.thumb; $("#pCat").value = p.category; $("#pLink").value = p.link;
+  $("#saveBtn").textContent = "Update Post"; $("#cancelEdit").hidden = false; window.scrollTo(0,0);
+}
+function resetForm(){ editId = null; $("#postForm").reset(); $("#saveBtn").textContent = "Add Post"; $("#cancelEdit").hidden = true; }
+$("#cancelEdit").onclick = resetForm;
+
+$("#postForm").onsubmit = function(e){
+  e.preventDefault();
+  var data = {title:$("#pTitle").value.trim(), thumb:$("#pThumb").value.trim(), category:$("#pCat").value, link:$("#pLink").value.trim()};
+  if(editId){
+    posts = posts.map(function(p){ return p.id===editId ? Object.assign({}, p, data) : p; });
+  } else {
+    data.id = Date.now().toString(36); posts.unshift(data);
+  }
+  var msg = editId ? "Update post" : "Add post";
+  resetForm(); adminSave(msg);
+};
+function showPanel(on){ $("#loginForm").hidden = on; $("#panel").hidden = !on; adminOn = on; if(on) renderAdmin(); }
+$("#loginForm").onsubmit = function(e){
+  e.preventDefault();
+  LS.set("hb_o",$("#gOwner").value.trim()); LS.set("hb_r",$("#gRepo").value.trim()); LS.set("hb_t",$("#gToken").value.trim());
+  say("Checking…");
+  adminLoad().then(function(){ say(""); showPanel(true); }).catch(function(err){ say(err.message); LS.del("hb_t"); });
+};
+$("#logout").onclick = function(){ LS.del("hb_t"); showPanel(false); say("Logged out."); };
+
+function route(){
+  var admin = location.hash === "#admin";
+  $("#siteView").hidden = admin; $("#adminView").hidden = !admin;
+  if(admin && !adminOn && cfg().t){
+    say("Loading…"); adminLoad().then(function(){ say(""); showPanel(true); }).catch(function(err){ say(err.message); showPanel(false); });
+  }
+  window.scrollTo(0,0);
+}
+window.addEventListener("hashchange", route);
+route(); loadPublic();
+</script>
+
+<!-- Monetag ads -->
+<script>(function(s){s.dataset.zone='11026720',s.src='https://al5sm.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+<script>(function(s){s.dataset.zone='11063934',s.src='https://n6wxm.com/vignette.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+<script>(function(s){s.dataset.zone='11216421',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+</body>
+</html>
